@@ -39,6 +39,8 @@ namespace LoanApp.Web.Pages.Loan
             {
                 logger.LogError(ex, "Failed to load application {identiyToken}", ViewModel.IdentityToken);
                 ModelState.AddModelError(string.Empty, "Unable to load customer details at this time.");
+
+                return Page();
             }
 
             ViewModelJson = JsonSerializer.Serialize(ViewModel);
@@ -99,7 +101,9 @@ namespace LoanApp.Web.Pages.Loan
             catch (Exception ex)
             {
                 logger.LogError(ex, "Failed to update loan application {identiyToken}", ViewModel.IdentityToken);
-                ModelState.AddModelError(string.Empty, "Unable to load loan application details at this time.");
+                ModelState.AddModelError(string.Empty, ex.Message);
+
+                return Page();
             }
             return RedirectToPage("./SuccessPage");
         }

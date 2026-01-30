@@ -51,6 +51,8 @@ public class QuotationPageModel(ILoanAppApiClient loanAppApiClient, ILogger<Quot
                 {
                     logger.LogError(ex, "Failed to load loan application {identiyToken}", ViewModel.IdentityToken);
                     ModelState.AddModelError(string.Empty, "Unable to load loan application details at this time.");
+
+                    return Page();
                 }
             }
         }

@@ -37,9 +37,25 @@ public sealed class LoanAppApiClient(HttpClient httpClient) : ILoanAppApiClient
 
         if (!resp.IsSuccessStatusCode)
         {
-            throw new HttpRequestException($"Failed to update loan application. Status code: {resp.StatusCode}");
+            var error = JsonSerializer.Deserialize<ErrorResponse>(result, _json);
+            if (error != null)
+            {
+                var validationDetails = error.Errors is not null
+                    ? string.Join("; ", error.Errors.Select(kvp => $"{kvp.Key}: {string.Join(", ", kvp.Value ?? Array.Empty<string>())}"))
+                    : null;
+
+                throw new Exception($"{(validationDetails is not null ? $"{validationDetails}" : string.Empty)}");
+            }
         }
 
         return result;
+    }
+
+    public class ErrorResponse
+    {
+        public string? Type { get; set; }
+        public string? Title { get; set; }
+        public int? Status { get; set; }
+        public Dictionary<string, string[]?>? Errors { get; set; }
     }
 }
