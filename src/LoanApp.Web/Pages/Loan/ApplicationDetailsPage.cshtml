@@ -1,0 +1,160 @@
+﻿@page
+@model LoanApp.Web.Pages.Loan.ApplicationDetailsPageModel
+@{
+    ViewData["Title"] = "Your Quote";
+}
+
+<style>
+    .readonly .form-control[disabled],
+    .readonly .form-control[readonly] {
+        background-color: #f6f6f6;
+        border-color: #e0e0e0;
+        color: #666;
+    }
+
+    .edit-toggle-btn {
+        border: none;
+        background: transparent;
+        color: #0d6efd;
+        cursor: pointer;
+    }
+
+    .slider-value {
+        font-weight: 600;
+    }
+
+    .range-wrap {
+        position: relative;
+        width: 100%;
+    }
+
+    .quote-card {
+        border: 1px solid rgba(0,0,0,.05);
+        background-color: #fff;
+    }
+
+    .quote-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: .75rem;
+        padding: .5rem 0;
+    }
+
+    .quote-label {
+        color: #8a8f98;
+        font-size: .95rem;
+    }
+
+    .quote-value {
+        color: #6c757d;
+        font-weight: 500;
+    }
+
+    .quote-line .quote-dotted {
+        margin-top: .35rem;
+        border-bottom: 2px dotted #e5e7eb;
+    }
+
+    .quote-amount {
+        font-size: 1.35rem;
+    }
+
+    .fine-print {
+        font-size: .78rem;
+        color: #9aa1a9;
+        line-height: 1.3;
+    }
+
+</style>
+
+<div class="container my-5" aria-labelledby="quoteTitle">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <form method="post" asp-page-handler="Apply">
+                <div class="quote-card shadow-sm p-4 rounded-4 bg-white">
+
+                    <h1 id="quoteTitle" class="text-center fw-semibold text-secondary mb-4">Your quote</h1>
+
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <h2 class="h6 text-muted mb-0">Your information</h2>
+                        <a class="link-primary small text-decoration-none" asp-page="./QuotationPage" asp-route-reference="@Model.ViewModel.IdentityToken" aria-label="Edit your information">Edit</a>
+                    </div>
+
+                    <div class="quote-row">
+                        <div class="quote-label">Name</div>
+                        <div class="quote-value">@Model.ViewModel.FirstName @Model.ViewModel.LastName</div>
+                    </div>
+                    <div class="quote-row">
+                        <div class="quote-label">Mobile</div>
+                        <div class="quote-value">@Model.ViewModel.MobileNumber</div>
+                    </div>
+                    <div class="quote-row mb-4">
+                        <div class="quote-label">Email</div>
+                        <div class="quote-value">@Model.ViewModel.Email</div>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <h2 class="h6 text-muted mb-0">Finance details</h2>
+                        <a class="link-primary small text-decoration-none" asp-page="./QuotationPage" asp-route-reference="@Model.ViewModel.IdentityToken" aria-label="Edit finance details">Edit</a>
+                    </div>
+
+                    <div class="quote-line py-3">
+                        <div class="d-flex align-items-start justify-content-between">
+                            <div class="flex-grow-1">
+                                <div class="quote-label mb-1">Finance amount</div>
+                                <div class="quote-dotted"></div>
+                            </div>
+
+                            <div class="text-end">
+                                <div class="quote-amount fw-semibold">
+                                    @Model.ViewModel.LoanAmount
+                                </div>
+                                <div class="small text-muted">
+                                    over @Model.ViewModel.TermMonths months
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quote-line py-3">
+                        <div class="d-flex align-items-start justify-content-between">
+                            <div class="flex-grow-1">
+                                <div class="quote-label mb-1">Repayments from</div>
+                                <div class="quote-dotted"></div>
+                            </div>
+
+                            <div class="text-end">
+                                <div class="quote-amount fw-semibold">
+                                    @Model.ViewModel.RepaymentAmount
+                                </div>
+                                <div class="small text-muted">
+                                    Monthly
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                    </div>
+                    <center>
+                        <div class="row col-md-6">
+                            <button type="submit" class="btn btn-primary">
+                                Apply now
+                            </button>
+                        </div>
+                    </center>
+
+                    <p class="fine-print text-center mt-3 mb-0">
+                        Total repayments $@Model.ViewModel.TotalRepaymentAmount, made up of an establishment fee of
+                        $@Model.ViewModel.EstablishmentFee, interest of $@Model.ViewModel.TotalInterest.
+                        The repayment amount is based on the variables selected, is subject to our assessment and suitability,
+                        and other important terms and conditions apply.
+                    </p>
+                    <div class="mt-3">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
