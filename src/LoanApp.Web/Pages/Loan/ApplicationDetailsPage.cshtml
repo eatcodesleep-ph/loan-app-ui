@@ -107,7 +107,7 @@
 
                             <div class="text-end">
                                 <div class="quote-amount fw-semibold">
-                                    @Model.ViewModel.LoanAmount
+                                    @Model.ViewModel.LoanAmount?.ToString("C")
                                 </div>
                                 <div class="small text-muted">
                                     over @Model.ViewModel.TermMonths months
@@ -125,7 +125,7 @@
 
                             <div class="text-end">
                                 <div class="quote-amount fw-semibold">
-                                    @Model.ViewModel.RepaymentAmount
+                                    @Model.ViewModel.RepaymentAmount?.ToString("C")
                                 </div>
                                 <div class="small text-muted">
                                     Monthly
@@ -145,8 +145,8 @@
                     </center>
 
                     <p class="fine-print text-center mt-3 mb-0">
-                        Total repayments $@Model.ViewModel.TotalRepaymentAmount, made up of an establishment fee of
-                        $@Model.ViewModel.EstablishmentFee, interest of $@Model.ViewModel.TotalInterest.
+                        Total repayments @Model.ViewModel.TotalRepaymentAmount?.ToString("C"), made up of an establishment fee of
+                        @Model.ViewModel.EstablishmentFee?.ToString("C"), interest of @Model.ViewModel.TotalInterest?.ToString("C").
                         The repayment amount is based on the variables selected, is subject to our assessment and suitability,
                         and other important terms and conditions apply.
                     </p>
